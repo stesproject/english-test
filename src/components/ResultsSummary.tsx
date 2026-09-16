@@ -9,13 +9,15 @@ import {
   HelpCircle, 
   ChevronDown, 
   ChevronUp, 
-  Zap
+  Zap,
+  Clock
 } from 'lucide-react';
 import { UserAnswerRecord } from '../types';
 
 interface ResultsSummaryProps {
   answers: UserAnswerRecord[];
   totalAvailable: number;
+  elapsedSeconds: number;
   onRetryMistakes: () => void;
   onRestartNewTest: () => void;
   onGoHome: () => void;
@@ -24,6 +26,7 @@ interface ResultsSummaryProps {
 export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
   answers,
   totalAvailable,
+  elapsedSeconds,
   onRetryMistakes,
   onRestartNewTest,
   onGoHome,
@@ -136,6 +139,22 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                 Sostenute
               </span>
             </div>
+          </div>
+
+          {/* Time Statistics Banner */}
+          <div className="my-6 max-w-xl mx-auto p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-around gap-2 sm:gap-4 text-xs">
+            <div className="flex items-center gap-2 text-slate-700">
+              <Clock className="w-4 h-4 text-indigo-600" />
+              <span>Tempo impiegato: <strong>{Math.floor(elapsedSeconds / 60)}m {elapsedSeconds % 60}s</strong></span>
+            </div>
+            {attemptedCount > 0 && (
+              <div className="text-slate-600 sm:border-l sm:border-slate-200 sm:pl-4">
+                Media: <strong>{Math.round(elapsedSeconds / attemptedCount)}s per domanda</strong>
+                <span className="text-[11px] text-slate-400 ml-1">
+                  (Target: 60s)
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Quick Notice about Total Pool */}

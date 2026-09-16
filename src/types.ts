@@ -14,7 +14,7 @@ export interface UserAnswerRecord {
   isCorrect: boolean;
 }
 
-export type QuizMode = 'all_random' | 'quick_20' | 'practice_50' | 'simulation' | 'retry_mistakes';
+export type QuizMode = 'all_random' | 'quick_15' | 'exam_30' | 'simulation' | 'retry_mistakes';
 
 export interface QuizState {
   screen: 'home' | 'quiz' | 'results';
@@ -28,4 +28,5 @@ export interface QuizState {
   hasAnswered: boolean;
   isCorrect: boolean | null;
   soundEnabled: boolean;
+  elapsedSeconds: number;
 }

@@ -82,12 +82,12 @@ export const StartScreen: React.FC<StartScreenProps> = ({
             </p>
           </button>
 
-          {/* Quick 20 */}
+          {/* Quick 15 */}
           <button
             type="button"
-            onClick={() => setSelectedMode('quick_20')}
+            onClick={() => setSelectedMode('quick_15')}
             className={`flex flex-col text-left p-4 rounded-xl border-2 transition-all cursor-pointer ${
-              selectedMode === 'quick_20'
+              selectedMode === 'quick_15'
                 ? 'border-indigo-600 bg-indigo-50/40 shadow-xs'
                 : 'border-slate-200 hover:border-slate-300 bg-white'
             }`}
@@ -95,32 +95,32 @@ export const StartScreen: React.FC<StartScreenProps> = ({
             <div className="flex items-center justify-between w-full mb-1">
               <span className="font-bold text-sm text-slate-900">Test Rapido</span>
               <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-700">
-                20 quesiti
+                15 quesiti (15 min)
               </span>
             </div>
             <p className="text-xs text-slate-500">
-              20 domande casuali selezionate per un ripasso veloce di 5-10 minuti.
+              15 domande casuali con tempo di 15 minuti per un ripasso veloce ed efficace.
             </p>
           </button>
 
-          {/* Practice 50 */}
+          {/* Exam 30 */}
           <button
             type="button"
-            onClick={() => setSelectedMode('practice_50')}
+            onClick={() => setSelectedMode('exam_30')}
             className={`flex flex-col text-left p-4 rounded-xl border-2 transition-all cursor-pointer ${
-              selectedMode === 'practice_50'
+              selectedMode === 'exam_30'
                 ? 'border-indigo-600 bg-indigo-50/40 shadow-xs'
                 : 'border-slate-200 hover:border-slate-300 bg-white'
             }`}
           >
             <div className="flex items-center justify-between w-full mb-1">
-              <span className="font-bold text-sm text-slate-900">Test Medio</span>
+              <span className="font-bold text-sm text-slate-900">Simulazione Ufficiale</span>
               <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-100 text-blue-700">
-                50 quesiti
+                30 quesiti (30 min)
               </span>
             </div>
             <p className="text-xs text-slate-500">
-              50 domande casuali ideali per una simulazione esame completa.
+              Formato esatto dell'esame ufficiale: 30 domande da completare in 30 minuti con timer real-time.
             </p>
           </button>
 

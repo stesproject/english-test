@@ -1,5 +1,5 @@
 import React from 'react';
-import { Volume2, VolumeX, StopCircle, GraduationCap } from 'lucide-react';
+import { Volume2, VolumeX, StopCircle, GraduationCap, Clock } from 'lucide-react';
 import { QuizState } from '../types';
 
 interface HeaderProps {
@@ -23,6 +23,34 @@ export const Header: React.FC<HeaderProps> = ({
   const wrongCount = state.answers.filter(a => !a.isCorrect).length;
   const progressPercent = totalInSession > 0 ? (state.currentIndex / totalInSession) * 100 : 0;
 
+  // Timer logic: 1 minute (60s) per question
+  const totalAllowedSeconds = totalInSession * 60;
+  const elapsedSeconds = state.elapsedSeconds;
+  const warningThresholdSeconds = Math.max(0, totalAllowedSeconds - 300); // 5 minutes before limit
+
+  const isRed = elapsedSeconds >= totalAllowedSeconds && totalAllowedSeconds > 0;
+  const isYellow = !isRed && elapsedSeconds >= warningThresholdSeconds && totalAllowedSeconds > 0;
+
+  const formatTime = (secs: number) => {
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  let timerClasses = "bg-slate-100 text-slate-700 border-slate-200";
+  let clockIconClass = "text-slate-500";
+  let timerTitle = `Tempo: 1 min per domanda (${totalInSession} min totali)`;
+
+  if (isRed) {
+    timerClasses = "bg-rose-100 text-rose-700 border-rose-300 font-bold animate-pulse shadow-xs";
+    clockIconClass = "text-rose-600";
+    timerTitle = "Tempo limite raggiunto!";
+  } else if (isYellow) {
+    timerClasses = "bg-amber-100 text-amber-800 border-amber-300 font-bold shadow-xs";
+    clockIconClass = "text-amber-600";
+    timerTitle = "Meno di 5 minuti rimanenti!";
+  }
+
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
@@ -45,9 +73,21 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </button>
 
-        {/* Center: Quiz stats if active */}
+        {/* Center: Quiz stats & Timer if active */}
         {isInQuiz && (
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Real-time Color Coded Timer */}
+            <div
+              className={`flex items-center gap-1.5 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg sm:rounded-xl border text-xs sm:text-sm font-mono transition-all ${timerClasses}`}
+              title={timerTitle}
+            >
+              <Clock className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${clockIconClass}`} />
+              <span className="font-bold">{formatTime(elapsedSeconds)}</span>
+              <span className="text-[10px] sm:text-xs opacity-75 font-sans hidden sm:inline">
+                / {totalInSession}m
+              </span>
+            </div>
+
             <div className="flex items-center gap-1.5 text-xs font-semibold">
               <span className="px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/60">
                 ✓ {correctCount}

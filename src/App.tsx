@@ -30,10 +30,27 @@ export const App: React.FC = () => {
     hasAnswered: false,
     isCorrect: null,
     soundEnabled: true,
+    elapsedSeconds: 0,
   });
 
   const [savedMistakes, setSavedMistakes] = useState<QuizQuestion[]>([]);
   const advanceTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Timer interval active only during quiz
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (quizState.screen === 'quiz') {
+      interval = setInterval(() => {
+        setQuizState(prev => ({
+          ...prev,
+          elapsedSeconds: prev.elapsedSeconds + 1,
+        }));
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [quizState.screen]);
 
   // Load saved mistakes from localStorage on initial render
   useEffect(() => {
@@ -84,10 +101,10 @@ export const App: React.FC = () => {
     // Always shuffle the pool for random presentation
     let shuffled = shuffleArray(pool);
 
-    if (mode === 'quick_20') {
-      shuffled = shuffled.slice(0, 20);
-    } else if (mode === 'practice_50') {
-      shuffled = shuffled.slice(0, 50);
+    if (mode === 'quick_15') {
+      shuffled = shuffled.slice(0, 15);
+    } else if (mode === 'exam_30') {
+      shuffled = shuffled.slice(0, 30);
     }
 
     setQuizState(prev => ({
@@ -101,6 +118,7 @@ export const App: React.FC = () => {
       selectedOption: null,
       hasAnswered: false,
       isCorrect: null,
+      elapsedSeconds: 0,
     }));
   };
 
@@ -212,6 +230,7 @@ export const App: React.FC = () => {
       selectedOption: null,
       hasAnswered: false,
       isCorrect: null,
+      elapsedSeconds: 0,
     }));
   };
 
@@ -231,6 +250,7 @@ export const App: React.FC = () => {
       selectedOption: null,
       hasAnswered: false,
       isCorrect: null,
+      elapsedSeconds: 0,
     }));
   };
 
@@ -275,6 +295,7 @@ export const App: React.FC = () => {
           <ResultsSummary
             answers={quizState.answers}
             totalAvailable={quizState.questions.length}
+            elapsedSeconds={quizState.elapsedSeconds}
             onRetryMistakes={handleRetryMistakes}
             onRestartNewTest={handleRestartNewTest}
             onGoHome={handleGoHome}
