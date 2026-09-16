@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import { QuizState, QuizMode, QuizQuestion, UserAnswerRecord } from './types';
 import { ALL_QUESTIONS } from './data/questions';
 import { Header } from './components/Header';
@@ -21,7 +21,6 @@ function shuffleArray<T>(array: T[]): T[] {
 const LOCAL_STORAGE_MISTAKES_KEY = 'english_quiz_saved_mistakes_v1';
 
 export const App: React.FC = () => {
-  const { t } = useTranslation();
   const [quizState, setQuizState] = useState<QuizState>({
     screen: 'home',
     mode: 'all_random',
@@ -308,7 +307,12 @@ export const App: React.FC = () => {
       {/* Footer */}
       <footer className="border-t border-slate-200/80 bg-white/70 py-4 text-center text-xs text-slate-500">
         <p>
-          {t('footer.text', { count: ALL_QUESTIONS.length })}
+          {/* {t('footer.text', { count: ALL_QUESTIONS.length })} */}
+          <Trans
+            i18nKey="footer.text"
+            values={{ count: ALL_QUESTIONS.length }}
+            components={{ 1: <a href="https://alchemy-pot.web.app/" target="_blank" /> }}
+          />
         </p>
       </footer>
     </div>

@@ -41,20 +41,24 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
   const wrongCount = attemptedCount - correctCount;
   const percentage = attemptedCount > 0 ? Math.round((correctCount / attemptedCount) * 100) : 0;
 
-  // Trigger confetti if high score
+  // Passing rule: half of questions + 1
+  const passingThreshold = Math.floor(attemptedCount / 2) + 1;
+  const isPassed = attemptedCount > 0 && correctCount >= passingThreshold;
+
+  // Trigger confetti if exam passed
   useEffect(() => {
-    if (attemptedCount >= 5 && percentage >= 75) {
+    if (attemptedCount > 0 && isPassed) {
       try {
         confetti({
-          particleCount: 80,
-          spread: 70,
+          particleCount: 90,
+          spread: 80,
           origin: { y: 0.6 }
         });
       } catch {
         // ignore
       }
     }
-  }, [attemptedCount, percentage]);
+  }, [attemptedCount, isPassed]);
 
   const toggleExpand = (id: string) => {
     setExpandedIds(prev => ({ ...prev, [id]: !prev[id] }));
@@ -69,10 +73,10 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
   // Performance rating badge
   const getRating = () => {
     if (attemptedCount === 0) return { title: t('resultsSummary.ratings.none'), color: "text-slate-600 bg-slate-100 border-slate-200" };
+    if (!isPassed) return { title: t('resultsSummary.ratings.needsWork'), color: "text-rose-700 bg-rose-50 border-rose-200" };
     if (percentage >= 90) return { title: t('resultsSummary.ratings.excellent'), color: "text-emerald-700 bg-emerald-50 border-emerald-200" };
     if (percentage >= 75) return { title: t('resultsSummary.ratings.veryGood'), color: "text-blue-700 bg-blue-50 border-blue-200" };
-    if (percentage >= 60) return { title: t('resultsSummary.ratings.pass'), color: "text-amber-700 bg-amber-50 border-amber-200" };
-    return { title: t('resultsSummary.ratings.needsWork'), color: "text-rose-700 bg-rose-50 border-rose-200" };
+    return { title: t('resultsSummary.ratings.pass'), color: "text-emerald-700 bg-emerald-50 border-emerald-200" };
   };
 
   const rating = getRating();
@@ -96,8 +100,52 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
             {t('resultsSummary.subtitle')}
           </p>
 
-          <div className="mt-4 inline-block px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold shadow-2xs">
-            <span className={rating.color}>{rating.title}</span>
+          {/* Outcome Alert Banner: Metà + 1 */}
+          {attemptedCount > 0 && (
+            <div
+              className={`my-5 p-4 rounded-2xl border text-left max-w-xl mx-auto flex items-start gap-3.5 shadow-xs transition-all ${
+                isPassed
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-950 ring-2 ring-emerald-500/20'
+                  : 'bg-rose-50 border-rose-300 text-rose-950 ring-2 ring-rose-500/20'
+              }`}
+            >
+              <div className="mt-0.5 shrink-0">
+                {isPassed ? (
+                  <CheckCircle2 className="w-7 h-7 text-emerald-600" />
+                ) : (
+                  <XCircle className="w-7 h-7 text-rose-600" />
+                )}
+              </div>
+              <div>
+                <h3 className="text-base font-black uppercase tracking-wide">
+                  {isPassed ? t('resultsSummary.outcome.passedTitle') : t('resultsSummary.outcome.failedTitle')}
+                </h3>
+                <p className="text-xs sm:text-sm mt-1 leading-relaxed opacity-90">
+                  {isPassed
+                    ? t('resultsSummary.outcome.passedSubtitle', {
+                        correct: correctCount,
+                        attempted: attemptedCount,
+                        threshold: passingThreshold,
+                      })
+                    : t('resultsSummary.outcome.failedSubtitle', {
+                        correct: correctCount,
+                        attempted: attemptedCount,
+                        threshold: passingThreshold,
+                      })}
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <div className="px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold shadow-2xs">
+              <span className={rating.color}>{rating.title}</span>
+            </div>
+            {attemptedCount > 0 && (
+              <div className="px-3.5 py-1.5 rounded-full border border-slate-200 bg-slate-50 text-slate-600 text-xs font-semibold">
+                Soglia minima (metà + 1): <strong>{passingThreshold} / {attemptedCount}</strong>
+              </div>
+            )}
           </div>
 
           {/* Big Score Numbers */}

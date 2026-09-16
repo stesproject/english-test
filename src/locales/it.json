@@ -22,8 +22,8 @@
     "timerTitleRed": "Tempo limite raggiunto!"
   },
   "startScreen": {
-    "heroBadge": "Preparazione Esame di Inglese",
-    "heroTitle": "Allenati con le simulazioni d'esame",
+    "heroBadge": "Preparazione Idoneità di Inglese",
+    "heroTitle": "Allenati con le simulazioni d'idoneità di Inglese",
     "heroSubtitle": "Mettiti alla prova con i quesiti a risposta multipla estratti dal materiale di preparazione. Ordine casuale, feedback immediato e spiegazioni grammaticali dettagliate.",
     "statsLoaded": "<1>{{count}}</1> domande",
     "statsRandom": "Ordine casuale",
@@ -38,7 +38,7 @@
       "quick15Desc": "15 domande casuali con tempo di 15 minuti per un ripasso veloce ed efficace.",
       "exam30Title": "Simulazione",
       "exam30Badge": "30 quesiti",
-      "exam30Desc": "Formato esatto dell'esame: 30 domande da completare in 30 minuti.",
+      "exam30Desc": "Formato: 30 domande in 30 minuti. Per superare la prova servono almeno la metà + 1 delle risposte corrette.",
       "simulationTitle": "Simulazione Specifica",
       "simulationBadge": "Scegli blocco",
       "simulationDesc": "Esercitati su uno specifico set di domande."
@@ -56,8 +56,8 @@
       "step1Desc": "Se azzecchi la risposta si passa subito alla domanda successiva senza perdite di tempo.",
       "step2Title": "Se sbagli",
       "step2Desc": "Viene segnalata la risposta giusta con la spiegazione della regola e un tasto <1>\"Continua\"</1>.",
-      "step3Title": "Interrompi quando vuoi",
-      "step3Desc": "Il tasto <1>\"Termina test\"</1> in alto genera subito il report con il punteggio parziale."
+      "step3Title": "Soglia superamento",
+      "step3Desc": "Per superare la prova è necessario rispondere correttamente alla metà delle domande + 1."
     }
   },
   "quizCard": {
@@ -73,18 +73,25 @@
   "resultsSummary": {
     "title": "Schema Riassuntivo del Test",
     "subtitle": "Riepilogo dettagliato delle domande sostenute durante la prova",
+    "outcome": {
+      "passedTitle": "PROVA SUPERATA!",
+      "passedSubtitle": "Complimenti! Hai raggiunto la soglia minima di superamento: {{correct}} corrette su {{attempted}} sostenute.",
+      "failedTitle": "PROVA NON SUPERATA",
+      "failedSubtitle": "Non hai raggiunto la soglia minima di superamento: hai risposto esattamente a {{correct}} domande su {{attempted}} sostenute. Per superare la prova erano necessarie almeno {{threshold}} risposte corrette."
+    },
     "ratings": {
       "none": "Nessuna risposta data",
-      "excellent": "Eccellente! Livello C1/B2",
-      "veryGood": "Molto Buono! Livello B1/B2",
-      "pass": "Sufficiente - Esame Superato",
-      "needsWork": "Da Potenziare - Continua a esercitarti"
+      "excellent": "Superato a pieni voti! (Livello C1/B2)",
+      "veryGood": "Superato con ottimo punteggio! (Livello B1/B2)",
+      "pass": "Prova Superata (Soglia minima raggiunta)",
+      "needsWork": "Non Superato (Sotto la soglia minima)"
     },
     "metrics": {
       "accuracy": "Precisione",
       "correct": "Corrette",
       "wrong": "Errate",
-      "attempted": "Sostenute"
+      "attempted": "Sostenute",
+      "threshold": "Soglia minima: {{threshold}}"
     },
     "time": {
       "spentLabel": "Tempo impiegato:",
@@ -108,11 +115,11 @@
       "noResults": "Nessuna domanda trovata con il filtro selezionato.",
       "yourAnswer": "Tua risposta:",
       "correctAnswer": "Corretta:",
-      "explanationTitle": "Spiegazione della regola:",
+      "explanationTitle": "Spiegazione:",
       "allOptions": "Tutte le opzioni:"
     }
   },
   "footer": {
-    "text": "Simulatore di Preparazione Esame d'Inglese. Domande basate sulle simulazioni d'esame"
+    "text": "Simulatore di Preparazione Idoneità d'Inglese • Sviluppato da <1>Stefano Mercadante</1>"
   }
 }

@@ -39,7 +39,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
         </p>
 
         {/* Stats strip */}
-        {/* <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs font-medium shadow-xs">
             <BookOpen className="w-4 h-4 text-indigo-500" />
             <span>
@@ -58,7 +58,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
             <CheckCircle className="w-4 h-4 text-blue-500" />
             <span>{t('startScreen.statsExplanations')}</span>
           </div>
-        </div> */}
+        </div>
       </div>
 
       {/* Mode Selector Card */}
@@ -260,10 +260,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
             {t('startScreen.guide.step3Title')}
           </h5>
           <p className="text-[11px] text-slate-500">
-            <Trans
-              i18nKey="startScreen.guide.step3Desc"
-              components={{ 1: <strong /> }}
-            />
+            {t('startScreen.guide.step3Desc')}
           </p>
         </div>
       </div> */}
