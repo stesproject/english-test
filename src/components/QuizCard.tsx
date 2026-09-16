@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CheckCircle2, XCircle, ArrowRight, HelpCircle, BookOpen, AlertTriangle } from 'lucide-react';
+import { CheckCircle2, XCircle, ArrowRight, HelpCircle, AlertTriangle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { QuizQuestion } from '../types';
 
@@ -61,7 +61,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({
     <div className="max-w-2xl mx-auto px-4 py-6 sm:py-10">
       {/* Simulation / Category Pill Header */}
       <div className="flex items-center justify-between gap-2 mb-4">
-        <div className="flex items-center gap-2 flex-wrap">
+        {/* <div className="flex items-center gap-2 flex-wrap">
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">
             <BookOpen className="w-3.5 h-3.5 text-indigo-500" />
             {question.simulation}
@@ -69,7 +69,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({
           <span className="px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700 text-xs font-medium border border-indigo-100">
             {question.category}
           </span>
-        </div>
+        </div> */}
         <span className="text-xs font-semibold text-slate-400">
           {t('quizCard.questionProgress', { current: questionIndex + 1, total: totalQuestions })}
         </span>

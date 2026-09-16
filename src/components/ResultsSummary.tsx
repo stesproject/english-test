@@ -354,9 +354,9 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                           <span className="text-[11px] font-semibold text-slate-400">
                             #{index + 1}
                           </span>
-                          <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">
+                          {/* <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">
                             {q.simulation}
-                          </span>
+                          </span> */}
                           <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700">
                             {q.category}
                           </span>
