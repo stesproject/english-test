@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { QuizState, QuizMode, QuizQuestion, UserAnswerRecord } from './types';
 import { ALL_QUESTIONS } from './data/questions';
 import { Header } from './components/Header';
@@ -20,6 +21,7 @@ function shuffleArray<T>(array: T[]): T[] {
 const LOCAL_STORAGE_MISTAKES_KEY = 'english_quiz_saved_mistakes_v1';
 
 export const App: React.FC = () => {
+  const { t } = useTranslation();
   const [quizState, setQuizState] = useState<QuizState>({
     screen: 'home',
     mode: 'all_random',
@@ -306,7 +308,7 @@ export const App: React.FC = () => {
       {/* Footer */}
       <footer className="border-t border-slate-200/80 bg-white/70 py-4 text-center text-xs text-slate-500">
         <p>
-          Simulatore di Preparazione Esame d'Inglese • {ALL_QUESTIONS.length} domande basate sulle simulazioni ufficiali
+          {t('footer.text', { count: ALL_QUESTIONS.length })}
         </p>
       </footer>
     </div>

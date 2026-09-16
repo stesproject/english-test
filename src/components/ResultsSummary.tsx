@@ -12,6 +12,7 @@ import {
   Zap,
   Clock
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { UserAnswerRecord } from '../types';
 
 interface ResultsSummaryProps {
@@ -31,6 +32,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
   onRestartNewTest,
   onGoHome,
 }) => {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState<'all' | 'mistakes' | 'correct'>('all');
   const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
 
@@ -66,11 +68,11 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
 
   // Performance rating badge
   const getRating = () => {
-    if (attemptedCount === 0) return { title: "Nessuna risposta data", color: "text-slate-600 bg-slate-100 border-slate-200" };
-    if (percentage >= 90) return { title: "Eccellente! Livello C1/B2", color: "text-emerald-700 bg-emerald-50 border-emerald-200" };
-    if (percentage >= 75) return { title: "Molto Buono! Livello B1/B2", color: "text-blue-700 bg-blue-50 border-blue-200" };
-    if (percentage >= 60) return { title: "Sufficiente - Esame Superato", color: "text-amber-700 bg-amber-50 border-amber-200" };
-    return { title: "Da Potenziare - Continua a esercitarti", color: "text-rose-700 bg-rose-50 border-rose-200" };
+    if (attemptedCount === 0) return { title: t('resultsSummary.ratings.none'), color: "text-slate-600 bg-slate-100 border-slate-200" };
+    if (percentage >= 90) return { title: t('resultsSummary.ratings.excellent'), color: "text-emerald-700 bg-emerald-50 border-emerald-200" };
+    if (percentage >= 75) return { title: t('resultsSummary.ratings.veryGood'), color: "text-blue-700 bg-blue-50 border-blue-200" };
+    if (percentage >= 60) return { title: t('resultsSummary.ratings.pass'), color: "text-amber-700 bg-amber-50 border-amber-200" };
+    return { title: t('resultsSummary.ratings.needsWork'), color: "text-rose-700 bg-rose-50 border-rose-200" };
   };
 
   const rating = getRating();
@@ -88,10 +90,10 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Schema Riassuntivo del Test
+            {t('resultsSummary.title')}
           </h2>
           <p className="mt-1 text-sm text-slate-500">
-            Riepilogo dettagliato delle domande sostenute durante la prova
+            {t('resultsSummary.subtitle')}
           </p>
 
           <div className="mt-4 inline-block px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold shadow-2xs">
@@ -106,7 +108,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                 {percentage}%
               </span>
               <span className="text-[11px] sm:text-xs font-semibold uppercase text-slate-500 tracking-wider">
-                Precisione
+                {t('resultsSummary.metrics.accuracy')}
               </span>
             </div>
 
@@ -116,7 +118,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                 {correctCount}
               </span>
               <span className="text-[11px] sm:text-xs font-semibold uppercase text-emerald-700 tracking-wider">
-                Corrette
+                {t('resultsSummary.metrics.correct')}
               </span>
             </div>
 
@@ -126,7 +128,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                 {wrongCount}
               </span>
               <span className="text-[11px] sm:text-xs font-semibold uppercase text-rose-700 tracking-wider">
-                Errate
+                {t('resultsSummary.metrics.wrong')}
               </span>
             </div>
 
@@ -136,7 +138,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                 {attemptedCount}
               </span>
               <span className="text-[11px] sm:text-xs font-semibold uppercase text-slate-500 tracking-wider">
-                Sostenute
+                {t('resultsSummary.metrics.attempted')}
               </span>
             </div>
           </div>
@@ -145,13 +147,26 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
           <div className="my-6 max-w-xl mx-auto p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-around gap-2 sm:gap-4 text-xs">
             <div className="flex items-center gap-2 text-slate-700">
               <Clock className="w-4 h-4 text-indigo-600" />
-              <span>Tempo impiegato: <strong>{Math.floor(elapsedSeconds / 60)}m {elapsedSeconds % 60}s</strong></span>
+              <span>
+                {t('resultsSummary.time.spentLabel')}{' '}
+                <strong>
+                  {t('resultsSummary.time.spentValue', {
+                    minutes: Math.floor(elapsedSeconds / 60),
+                    seconds: elapsedSeconds % 60,
+                  })}
+                </strong>
+              </span>
             </div>
             {attemptedCount > 0 && (
               <div className="text-slate-600 sm:border-l sm:border-slate-200 sm:pl-4">
-                Media: <strong>{Math.round(elapsedSeconds / attemptedCount)}s per domanda</strong>
+                {t('resultsSummary.time.averageLabel')}{' '}
+                <strong>
+                  {t('resultsSummary.time.averageValue', {
+                    avg: Math.round(elapsedSeconds / attemptedCount),
+                  })}
+                </strong>
                 <span className="text-[11px] text-slate-400 ml-1">
-                  (Target: 60s)
+                  {t('resultsSummary.time.targetLabel')}
                 </span>
               </div>
             )}
@@ -160,7 +175,10 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
           {/* Quick Notice about Total Pool */}
           {attemptedCount < totalAvailable && (
             <p className="text-xs text-slate-400 mb-6">
-              (Hai completato {attemptedCount} quesiti su un totale di {totalAvailable} disponibili nel database)
+              {t('resultsSummary.poolNotice', {
+                attempted: attemptedCount,
+                total: totalAvailable,
+              })}
             </p>
           )}
 
@@ -173,7 +191,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold shadow-md shadow-amber-100 hover:shadow-lg transition-all cursor-pointer"
               >
                 <Zap className="w-4 h-4" />
-                <span>Ripeti i {wrongCount} errori</span>
+                <span>{t('resultsSummary.actions.retryMistakes', { count: wrongCount })}</span>
               </button>
             )}
 
@@ -183,7 +201,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold shadow-md shadow-indigo-100 hover:shadow-lg transition-all cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>Nuovo Test Casuale</span>
+              <span>{t('resultsSummary.actions.newTest')}</span>
             </button>
 
             <button
@@ -192,7 +210,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-sm font-bold transition-all cursor-pointer"
             >
               <Home className="w-4 h-4" />
-              <span>Torna al Menu</span>
+              <span>{t('resultsSummary.actions.goHome')}</span>
             </button>
           </div>
         </div>
@@ -203,10 +221,10 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
           <div>
             <h3 className="text-lg font-bold text-slate-900">
-              Dettaglio delle Risposte Sostenute
+              {t('resultsSummary.breakdown.title')}
             </h3>
             <p className="text-xs text-slate-500">
-              Clicca su una domanda per consultare la regola e la spiegazione grammaticale
+              {t('resultsSummary.breakdown.subtitle')}
             </p>
           </div>
 
@@ -221,7 +239,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Tutte ({answers.length})
+              {t('resultsSummary.breakdown.filterAll', { count: answers.length })}
             </button>
             <button
               type="button"
@@ -232,7 +250,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Solo Errori ({wrongCount})
+              {t('resultsSummary.breakdown.filterMistakes', { count: wrongCount })}
             </button>
             <button
               type="button"
@@ -243,7 +261,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Solo Corrette ({correctCount})
+              {t('resultsSummary.breakdown.filterCorrect', { count: correctCount })}
             </button>
           </div>
         </div>
@@ -251,7 +269,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
         {/* List of Questions */}
         {filteredAnswers.length === 0 ? (
           <div className="text-center py-10 text-slate-400 text-sm">
-            Nessuna domanda trovata con il filtro selezionato.
+            {t('resultsSummary.breakdown.noResults')}
           </div>
         ) : (
           <div className="space-y-3">
@@ -300,11 +318,11 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                         </h4>
                         <div className="mt-1.5 text-xs flex flex-wrap items-center gap-x-4 gap-y-1">
                           <span className={record.isCorrect ? "text-emerald-700 font-medium" : "text-rose-700 font-medium"}>
-                            Tua risposta: <strong>{q.options[record.selectedIndex]}</strong>
+                            {t('resultsSummary.breakdown.yourAnswer')} <strong>{q.options[record.selectedIndex]}</strong>
                           </span>
                           {!record.isCorrect && (
                             <span className="text-emerald-700 font-medium">
-                              Corretta: <strong>{q.options[q.correctIndex]}</strong>
+                              {t('resultsSummary.breakdown.correctAnswer')} <strong>{q.options[q.correctIndex]}</strong>
                             </span>
                           )}
                         </div>
@@ -322,7 +340,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                       <div className="p-3 rounded-lg bg-indigo-50/70 border border-indigo-100 text-slate-800">
                         <p className="font-bold text-indigo-900 flex items-center gap-1.5 mb-1">
                           <HelpCircle className="w-4 h-4 text-indigo-600" />
-                          Spiegazione della regola:
+                          {t('resultsSummary.breakdown.explanationTitle')}
                         </p>
                         <p className="text-slate-700 leading-relaxed">
                           {q.explanation}
@@ -332,7 +350,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
                       {/* All Options list */}
                       <div className="space-y-1 pt-1">
                         <span className="font-semibold text-slate-500 uppercase tracking-wider text-[10px]">
-                          Tutte le opzioni:
+                          {t('resultsSummary.breakdown.allOptions')}
                         </span>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
                           {q.options.map((opt, optIdx) => {

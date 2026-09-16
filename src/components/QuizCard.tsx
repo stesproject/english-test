@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { CheckCircle2, XCircle, ArrowRight, HelpCircle, BookOpen, AlertTriangle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { QuizQuestion } from '../types';
 
 interface QuizCardProps {
@@ -23,6 +24,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({
   onSelectOption,
   onNextQuestion,
 }) => {
+  const { t } = useTranslation();
   const letters = ['a', 'b', 'c', 'd'];
 
   // Keyboard shortcut listener
@@ -69,7 +71,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({
           </span>
         </div>
         <span className="text-xs font-semibold text-slate-400">
-          Quesito {questionIndex + 1} / {totalQuestions}
+          {t('quizCard.questionProgress', { current: questionIndex + 1, total: totalQuestions })}
         </span>
       </div>
 
@@ -146,10 +148,13 @@ export const QuizCard: React.FC<QuizCardProps> = ({
               <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
               <div>
                 <p className="text-xs font-bold uppercase tracking-wider text-rose-700">
-                  Risposta errata
+                  {t('quizCard.wrongAnswer')}
                 </p>
                 <p className="text-sm mt-0.5">
-                  La risposta corretta è: <strong className="font-bold underline text-emerald-800">{question.options[question.correctIndex]}</strong>
+                  {t('quizCard.correctAnswerIs')}{' '}
+                  <strong className="font-bold underline text-emerald-800">
+                    {question.options[question.correctIndex]}
+                  </strong>
                 </p>
               </div>
             </div>
@@ -160,7 +165,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({
                 <HelpCircle className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
                 <div className="space-y-1">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-900">
-                    Spiegazione della regola:
+                    {t('quizCard.explanationTitle')}
                   </h4>
                   <p className="text-sm text-slate-700 leading-relaxed">
                     {question.explanation}
@@ -175,11 +180,11 @@ export const QuizCard: React.FC<QuizCardProps> = ({
               onClick={onNextQuestion}
               className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-white font-bold text-base bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 shadow-md shadow-indigo-100 hover:shadow-lg transition-all transform active:scale-[0.99] cursor-pointer"
             >
-              <span>Continua alla domanda successiva</span>
+              <span>{t('quizCard.continueBtn')}</span>
               <ArrowRight className="w-5 h-5" />
             </button>
             <p className="text-center text-[11px] text-slate-400">
-              (oppure premi Invio sulla tastiera per continuare)
+              {t('quizCard.continueKeyboardHint')}
             </p>
           </div>
         )}
@@ -188,14 +193,14 @@ export const QuizCard: React.FC<QuizCardProps> = ({
         {hasAnswered && isCorrect === true && (
           <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-emerald-700 text-sm font-semibold animate-in fade-in duration-150">
             <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-            <span>Risposta esatta! Avanzamento in corso...</span>
+            <span>{t('quizCard.correctFeedback')}</span>
           </div>
         )}
       </div>
 
       {/* Keyboard hints footer */}
       <div className="mt-4 flex items-center justify-center gap-3 text-xs text-slate-400">
-        <span>Scorciatoie: tasti 1-3 (o A-C) per scegliere</span>
+        <span>{t('quizCard.keyboardShortcuts')}</span>
       </div>
     </div>
   );

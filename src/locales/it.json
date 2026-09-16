@@ -1,0 +1,118 @@
+{
+  "common": {
+    "question": "Domanda",
+    "quesiti": "quesiti",
+    "minutes": "minuti",
+    "minutesShort": "min",
+    "secondsShort": "s",
+    "target": "Target"
+  },
+  "header": {
+    "title": "English Exam Quiz",
+    "subtitle": "Simulatore d'Inglese",
+    "backHomeTooltip": "Torna alla schermata iniziale",
+    "soundActive": "Audio attivo",
+    "soundMuted": "Audio muto",
+    "finishTest": "Termina test",
+    "finishTestTooltip": "Interrompi il quiz e guarda il riepilogo delle risposte date finora",
+    "questionCounter": "Domanda <1>{{current}}</1> di {{total}}",
+    "attemptedCounter": "Svolte: {{count}}",
+    "timerTitleNormal": "Tempo: 1 min per domanda ({{total}} min totali)",
+    "timerTitleYellow": "Meno di 5 minuti rimanenti!",
+    "timerTitleRed": "Tempo limite raggiunto!"
+  },
+  "startScreen": {
+    "heroBadge": "Preparazione Esame di Inglese",
+    "heroTitle": "Allenati con le simulazioni d'esame",
+    "heroSubtitle": "Mettiti alla prova con i quesiti a risposta multipla estratti dal materiale di preparazione. Ordine casuale, feedback immediato e spiegazioni grammaticali dettagliate.",
+    "statsLoaded": "<1>{{count}}</1> domande",
+    "statsRandom": "Ordine casuale",
+    "statsExplanations": "Spiegazioni delle risposte",
+    "chooseMode": "Scegli la modalità del test",
+    "modes": {
+      "allRandomTitle": "Tutte le domande",
+      "allRandomBadge": "{{count}} quesiti",
+      "allRandomDesc": "Sessione completa ad oltranza in ordine casuale. Puoi fermarti in ogni momento.",
+      "quick15Title": "Test Rapido",
+      "quick15Badge": "15 quesiti",
+      "quick15Desc": "15 domande casuali con tempo di 15 minuti per un ripasso veloce ed efficace.",
+      "exam30Title": "Simulazione",
+      "exam30Badge": "30 quesiti",
+      "exam30Desc": "Formato esatto dell'esame: 30 domande da completare in 30 minuti.",
+      "simulationTitle": "Simulazione Specifica",
+      "simulationBadge": "Scegli blocco",
+      "simulationDesc": "Esercitati su uno specifico set di domande."
+    },
+    "selectSimulationLabel": "Seleziona la simulazione da svolgere:",
+    "simulationOptionCount": "{{count}} domande",
+    "startQuizBtn": "Inizia il Quiz Ora",
+    "mistakesReview": {
+      "title": "Hai {{count}} errori da ripassare",
+      "subtitle": "Riprova le domande a cui hai risposto in modo errato nelle sessioni precedenti.",
+      "btn": "Ripassa solo gli errori"
+    },
+    "guide": {
+      "step1Title": "Risposta corretta",
+      "step1Desc": "Se azzecchi la risposta si passa subito alla domanda successiva senza perdite di tempo.",
+      "step2Title": "Se sbagli",
+      "step2Desc": "Viene segnalata la risposta giusta con la spiegazione della regola e un tasto <1>\"Continua\"</1>.",
+      "step3Title": "Interrompi quando vuoi",
+      "step3Desc": "Il tasto <1>\"Termina test\"</1> in alto genera subito il report con il punteggio parziale."
+    }
+  },
+  "quizCard": {
+    "questionProgress": "Quesito {{current}} / {{total}}",
+    "wrongAnswer": "Risposta errata",
+    "correctAnswerIs": "La risposta corretta è:",
+    "explanationTitle": "Spiegazione:",
+    "continueBtn": "Continua alla domanda successiva",
+    "continueKeyboardHint": "(oppure premi Invio per continuare)",
+    "correctFeedback": "Risposta esatta!",
+    "keyboardShortcuts": "Scorciatoie: tasti 1-3 (o A-C) per scegliere"
+  },
+  "resultsSummary": {
+    "title": "Schema Riassuntivo del Test",
+    "subtitle": "Riepilogo dettagliato delle domande sostenute durante la prova",
+    "ratings": {
+      "none": "Nessuna risposta data",
+      "excellent": "Eccellente! Livello C1/B2",
+      "veryGood": "Molto Buono! Livello B1/B2",
+      "pass": "Sufficiente - Esame Superato",
+      "needsWork": "Da Potenziare - Continua a esercitarti"
+    },
+    "metrics": {
+      "accuracy": "Precisione",
+      "correct": "Corrette",
+      "wrong": "Errate",
+      "attempted": "Sostenute"
+    },
+    "time": {
+      "spentLabel": "Tempo impiegato:",
+      "spentValue": "{{minutes}}m {{seconds}}s",
+      "averageLabel": "Media:",
+      "averageValue": "{{avg}}s per domanda",
+      "targetLabel": "(Target: 60s)"
+    },
+    "poolNotice": "(Hai completato {{attempted}} quesiti su un totale di {{total}} disponibili)",
+    "actions": {
+      "retryMistakes": "Ripeti i {{count}} errori",
+      "newTest": "Nuovo Test Casuale",
+      "goHome": "Torna al Menu"
+    },
+    "breakdown": {
+      "title": "Dettaglio delle Risposte Sostenute",
+      "subtitle": "Clicca su una domanda per consultare la regola e la spiegazione grammaticale",
+      "filterAll": "Tutte ({{count}})",
+      "filterMistakes": "Solo Errori ({{count}})",
+      "filterCorrect": "Solo Corrette ({{count}})",
+      "noResults": "Nessuna domanda trovata con il filtro selezionato.",
+      "yourAnswer": "Tua risposta:",
+      "correctAnswer": "Corretta:",
+      "explanationTitle": "Spiegazione della regola:",
+      "allOptions": "Tutte le opzioni:"
+    }
+  },
+  "footer": {
+    "text": "Simulatore di Preparazione Esame d'Inglese. Domande basate sulle simulazioni d'esame"
+  }
+}

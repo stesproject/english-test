@@ -1,5 +1,6 @@
 import React from 'react';
 import { Volume2, VolumeX, StopCircle, GraduationCap, Clock } from 'lucide-react';
+import { useTranslation, Trans } from 'react-i18next';
 import { QuizState } from '../types';
 
 interface HeaderProps {
@@ -15,6 +16,7 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleSound,
   onGoHome,
 }) => {
+  const { t } = useTranslation();
   const isInQuiz = state.screen === 'quiz';
   const totalInSession = state.questions.length;
   const currentNum = state.currentIndex + 1;
@@ -39,16 +41,16 @@ export const Header: React.FC<HeaderProps> = ({
 
   let timerClasses = "bg-slate-100 text-slate-700 border-slate-200";
   let clockIconClass = "text-slate-500";
-  let timerTitle = `Tempo: 1 min per domanda (${totalInSession} min totali)`;
+  let timerTitle = t('header.timerTitleNormal', { total: totalInSession });
 
   if (isRed) {
     timerClasses = "bg-rose-100 text-rose-700 border-rose-300 font-bold animate-pulse shadow-xs";
     clockIconClass = "text-rose-600";
-    timerTitle = "Tempo limite raggiunto!";
+    timerTitle = t('header.timerTitleRed');
   } else if (isYellow) {
     timerClasses = "bg-amber-100 text-amber-800 border-amber-300 font-bold shadow-xs";
     clockIconClass = "text-amber-600";
-    timerTitle = "Meno di 5 minuti rimanenti!";
+    timerTitle = t('header.timerTitleYellow');
   }
 
   return (
@@ -58,17 +60,17 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           onClick={onGoHome}
           className="flex items-center gap-2.5 text-left group transition-all"
-          title="Torna alla schermata iniziale"
+          title={t('header.backHomeTooltip')}
         >
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white flex items-center justify-center shadow-md shadow-indigo-100 group-hover:scale-105 transition-transform">
             <GraduationCap className="w-6 h-6" />
           </div>
           <div>
             <h1 className="text-base sm:text-lg font-bold text-slate-900 leading-tight group-hover:text-indigo-600 transition-colors">
-              English Exam Quiz
+              {t('header.title')}
             </h1>
             <p className="text-xs text-slate-500 hidden sm:block">
-              Simulatore Ufficiale d'Inglese
+              {t('header.subtitle')}
             </p>
           </div>
         </button>
@@ -98,10 +100,14 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
             <div className="hidden md:flex flex-col items-end">
               <span className="text-xs font-medium text-slate-500">
-                Domanda <strong className="text-slate-900">{currentNum}</strong> di {totalInSession}
+                <Trans
+                  i18nKey="header.questionCounter"
+                  values={{ current: currentNum, total: totalInSession }}
+                  components={{ 1: <strong className="text-slate-900" /> }}
+                />
               </span>
               <span className="text-[11px] text-slate-400">
-                Svolte: {attemptedCount}
+                {t('header.attemptedCounter', { count: attemptedCount })}
               </span>
             </div>
           </div>
@@ -112,8 +118,8 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Sound toggle */}
           <button
             onClick={onToggleSound}
-            aria-label={state.soundEnabled ? "Disattiva audio" : "Attiva audio"}
-            title={state.soundEnabled ? "Audio attivo" : "Audio muto"}
+            aria-label={state.soundEnabled ? t('header.soundMuted') : t('header.soundActive')}
+            title={state.soundEnabled ? t('header.soundActive') : t('header.soundMuted')}
             className="p-2 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
           >
             {state.soundEnabled ? (
@@ -128,10 +134,10 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onAbortQuiz}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-lg shadow-sm transition-colors cursor-pointer"
-              title="Interrompi il quiz e guarda il riepilogo delle risposte date finora"
+              title={t('header.finishTestTooltip')}
             >
               <StopCircle className="w-4 h-4 text-rose-600" />
-              <span>Termina test</span>
+              <span>{t('header.finishTest')}</span>
             </button>
           )}
         </div>
