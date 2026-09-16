@@ -92,7 +92,7 @@
       "correct": "Corrette",
       "wrong": "Errate",
       "attempted": "Sostenute",
-      "threshold": "Soglia minima: {{threshold}}"
+      "threshold": "Soglia minima:"
     },
     "time": {
       "spentLabel": "Tempo impiegato:",

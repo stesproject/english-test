@@ -143,7 +143,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
             </div>
             {attemptedCount > 0 && (
               <div className="px-3.5 py-1.5 rounded-full border border-slate-200 bg-slate-50 text-slate-600 text-xs font-semibold">
-                Soglia minima: <strong>{passingThreshold} / {attemptedCount}</strong>
+                {t('resultsSummary.metrics.threshold')} <strong>{passingThreshold} / {attemptedCount}</strong>
               </div>
             )}
           </div>
