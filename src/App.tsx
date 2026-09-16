@@ -149,6 +149,11 @@ export const App: React.FC = () => {
     if (isAnsCorrect) {
       if (quizState.soundEnabled) soundFx.playCorrect();
 
+      // If this question was previously in savedMistakes, remove it since user got it right!
+      if (savedMistakes.some(m => m.id === currentQ.id)) {
+        saveMistakesToStorage(savedMistakes.filter(m => m.id !== currentQ.id));
+      }
+
       // If correct: auto-advance after brief delay (550ms)
       advanceTimerRef.current = setTimeout(() => {
         advanceNextQuestion(nextAnswers);
@@ -184,6 +189,13 @@ export const App: React.FC = () => {
     } else {
       // Quiz finished completely!
       if (quizState.soundEnabled) soundFx.playFinished();
+
+      // If completed a mistakes review session, remove any questions that were answered correctly
+      if (quizState.mode === 'retry_mistakes') {
+        const stillWrongIds = new Set(currentAnswersList.filter(a => !a.isCorrect).map(a => a.question.id));
+        saveMistakesToStorage(savedMistakes.filter(m => stillWrongIds.has(m.id)));
+      }
+
       setQuizState(prev => ({
         ...prev,
         screen: 'results',
@@ -203,6 +215,14 @@ export const App: React.FC = () => {
     }
 
     if (quizState.soundEnabled) soundFx.playFinished();
+
+    // If aborting while reviewing mistakes, remove questions that were answered correctly so far
+    if (quizState.mode === 'retry_mistakes') {
+      const correctlyAnsweredIds = new Set(quizState.answers.filter(a => a.isCorrect).map(a => a.question.id));
+      if (correctlyAnsweredIds.size > 0) {
+        saveMistakesToStorage(savedMistakes.filter(m => !correctlyAnsweredIds.has(m.id)));
+      }
+    }
 
     setQuizState(prev => ({
       ...prev,
@@ -255,6 +275,10 @@ export const App: React.FC = () => {
     }));
   };
 
+  const handleDismissMistakes = () => {
+    saveMistakesToStorage([]);
+  };
+
   const toggleSound = () => {
     setQuizState(prev => ({ ...prev, soundEnabled: !prev.soundEnabled }));
   };
@@ -276,6 +300,7 @@ export const App: React.FC = () => {
             onStart={handleStartQuiz}
             savedMistakesCount={savedMistakes.length}
             onStartMistakesReview={() => handleStartQuiz('retry_mistakes')}
+            onDismissMistakes={handleDismissMistakes}
           />
         )}
 

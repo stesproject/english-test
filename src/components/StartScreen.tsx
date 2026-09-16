@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Sparkles, Shuffle, BookOpen, Flame, History, CheckCircle } from 'lucide-react';
+import { Play, Sparkles, Shuffle, BookOpen, Flame, History, CheckCircle, X } from 'lucide-react';
 import { useTranslation, Trans } from 'react-i18next';
 import { QuizMode } from '../types';
 import { ALL_QUESTIONS, SIMULATION_GROUPS } from '../data/questions';
@@ -8,12 +8,14 @@ interface StartScreenProps {
   onStart: (mode: QuizMode, selectedSimulation?: string) => void;
   savedMistakesCount: number;
   onStartMistakesReview: () => void;
+  onDismissMistakes?: () => void;
 }
 
 export const StartScreen: React.FC<StartScreenProps> = ({
   onStart,
   savedMistakesCount,
   onStartMistakesReview,
+  onDismissMistakes,
 }) => {
   const { t } = useTranslation();
   const [selectedMode, setSelectedMode] = useState<QuizMode>('all_random');
@@ -199,8 +201,21 @@ export const StartScreen: React.FC<StartScreenProps> = ({
 
       {/* Mistakes Review Banner if saved mistakes exist */}
       {savedMistakesCount > 0 && (
-        <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="relative bg-amber-50/70 border border-amber-200/80 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* Dismiss button */}
+          {onDismissMistakes && (
+            <button
+              type="button"
+              onClick={onDismissMistakes}
+              className="absolute top-3 right-3 p-1.5 rounded-lg text-amber-700 hover:text-amber-900 hover:bg-amber-100/80 transition-colors cursor-pointer"
+              title={t('startScreen.mistakesReview.dismiss')}
+              aria-label={t('startScreen.mistakesReview.dismiss')}
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+
+          <div className="flex items-center gap-3 pr-6 sm:pr-0">
             <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
               <History className="w-5 h-5" />
             </div>
@@ -216,7 +231,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
           <button
             type="button"
             onClick={onStartMistakesReview}
-            className="w-full sm:w-auto px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-xs hover:shadow transition-all cursor-pointer whitespace-nowrap"
+            className="w-full sm:w-auto px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-xs hover:shadow transition-all cursor-pointer whitespace-nowrap sm:mr-6"
           >
             {t('startScreen.mistakesReview.btn')}
           </button>

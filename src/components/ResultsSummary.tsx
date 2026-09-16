@@ -96,9 +96,9 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             {t('resultsSummary.title')}
           </h2>
-          <p className="mt-1 text-sm text-slate-500">
+          {/* <p className="mt-1 text-sm text-slate-500">
             {t('resultsSummary.subtitle')}
-          </p>
+          </p> */}
 
           {/* Outcome Alert Banner: Metà + 1 */}
           {attemptedCount > 0 && (
@@ -143,7 +143,7 @@ export const ResultsSummary: React.FC<ResultsSummaryProps> = ({
             </div>
             {attemptedCount > 0 && (
               <div className="px-3.5 py-1.5 rounded-full border border-slate-200 bg-slate-50 text-slate-600 text-xs font-semibold">
-                Soglia minima (metà + 1): <strong>{passingThreshold} / {attemptedCount}</strong>
+                Soglia minima: <strong>{passingThreshold} / {attemptedCount}</strong>
               </div>
             )}
           </div>

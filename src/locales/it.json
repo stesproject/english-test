@@ -49,7 +49,8 @@
     "mistakesReview": {
       "title": "Hai {{count}} errori da ripassare",
       "subtitle": "Riprova le domande a cui hai risposto in modo errato nelle sessioni precedenti.",
-      "btn": "Ripassa solo gli errori"
+      "btn": "Ripassa solo gli errori",
+      "dismiss": "Ignora e cancella errori salvati"
     },
     "guide": {
       "step1Title": "Risposta corretta",
@@ -83,8 +84,8 @@
       "none": "Nessuna risposta data",
       "excellent": "Superato a pieni voti! (Livello C1/B2)",
       "veryGood": "Superato con ottimo punteggio! (Livello B1/B2)",
-      "pass": "Prova Superata (Soglia minima raggiunta)",
-      "needsWork": "Non Superato (Sotto la soglia minima)"
+      "pass": "Prova Superata",
+      "needsWork": "Non Superato"
     },
     "metrics": {
       "accuracy": "Precisione",
